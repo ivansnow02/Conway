@@ -22,16 +22,17 @@ func NewUniverse() Universe {
 }
 func (u Universe) Show() {
 
-	for i := 0; i < height; i++ {
-		for j := 0; j < width; j++ {
-			if u[i][j] == false {
-				fmt.Print(" ")
-			} else {
-				fmt.Print("*")
-			}
-		}
-		fmt.Println(" ")
-	}
+	//for i := 0; i < height; i++ {
+	//	for j := 0; j < width; j++ {
+	//		if u[i][j] == false {
+	//			fmt.Print(" ")
+	//		} else {
+	//			fmt.Print("*")
+	//		}
+	//	}
+	//	fmt.Println(" ")
+	//}
+	fmt.Print("\x0c", u.String())
 }
 func (u Universe) Seed() {
 	for i := 0; i < height; i++ {
@@ -50,7 +51,23 @@ func (u Universe) Alive(x, y int) bool {
 	y = (y + height) % height
 	return u[y][x]
 }
+func (u Universe) String() string {
+	var b byte
+	buf := make([]byte, 0, (width+1)*height)
 
+	for y := 0; y < height; y++ {
+		for x := 0; x < width; x++ {
+			b = ' '
+			if u[y][x] {
+				b = '*'
+			}
+			buf = append(buf, b)
+		}
+		buf = append(buf, '\n')
+	}
+
+	return string(buf)
+}
 func (u Universe) Neighbors(x, y int) int {
 
 	cnt := 0
